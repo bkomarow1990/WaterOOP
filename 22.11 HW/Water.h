@@ -22,15 +22,18 @@ public:
 	void print()const;
 	const size_t getArea() const;
 	const size_t getAreaWaterSurface()const;
-	Water();
-	Water(const string & name,const Type_water& tpwater,const size_t & width,const size_t &height,const size_t&maxDepth);
-	~Water();
+	static bool isWaterAreasSameType(const Water& one, const Water& two);
+	static int comparisonAreas(const Water&one, const Water&two);
+	static Water getBiggestWaterAreaInArr(const Water arr[],const int size,const Type_water & tpwater);
+	Water(); // default ctor
+	Water(const string & name,const Type_water& tpwater,const size_t & width,const size_t &height,const size_t&maxDepth); //ctor with params
+	~Water(); // dctor (deletes all fields of dynamic objectes)
 private:
-	string name=nullptr;
-	Type_water type_water = Type_water::UND;
-	size_t width = 0;
-	size_t height = 0;
-	size_t maxDepth = 0;
+	string name;
+	Type_water type_water;
+	size_t width;
+	size_t height;
+	size_t maxDepth;
 	static size_t countWaterAreas;
 };
 

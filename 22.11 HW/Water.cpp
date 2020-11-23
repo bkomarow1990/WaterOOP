@@ -1,5 +1,5 @@
-#include "Water.h"
 #include <iostream>
+#include "Water.h"
 #include <string>
 size_t Water::countWaterAreas = 0;
 
@@ -10,7 +10,7 @@ const string Water::getName() const
 
 const string Water::getWaterAreaType() const
 {
-	string types[]{"UND","LAKE","RIVER","SEA","OCEAN"};
+	static string types[]{"UND","LAKE","RIVER","SEA","OCEAN"};
 	return types[(int)type_water];
 }
 
@@ -68,7 +68,7 @@ void Water::setTypeWater(const Type_water& tpwater)
 void Water::print() const
 {
 	cout << "Name: " << name<<endl;
-	cout << "Type water: " << getWaterAreaType();
+	cout << "Type Water: "<<getWaterAreaType() << endl;
 	cout << "Width: " << width << endl;
 	cout << "Height: " << height << endl;
 	cout << "MaxDepth: " << maxDepth << endl;
@@ -87,8 +87,62 @@ const size_t Water::getAreaWaterSurface() const
 	return width*height;
 }
 
+bool Water::isWaterAreasSameType(const Water& one,const Water& two)
+{
+	if (one.getWaterAreaType()==two.getWaterAreaType())
+	{
+		return true;
+	}
+	else {
+		return false;
+	}
+	
+}
+
+int Water::comparisonAreas(const Water& one, const Water& two)
+{
+	if (one.getArea() == two.getArea())
+	{
+		return 0;
+	}
+	else if (one.getArea()>two.getArea())
+	{
+		return 1;
+	}
+	else if (one.getArea() < two.getArea())
+	{
+		return -1;
+	}
+}
+
+Water Water::getBiggestWaterAreaInArr(const Water arr[], const int size, const Type_water& tpwater)
+{
+	size_t maxIndex = 0;
+	Water max = arr[0];
+	for (size_t i = 0; i < size; i++)
+	{
+		if (arr[i].type_water == tpwater)
+		{
+			if (max.getArea() < arr[i].getArea())
+			{
+				max = arr[i];
+				maxIndex = i;
+			}
+		}
+	}
+	return max;
+}
+
+
 Water::Water()
-{}
+{
+	name = "NoName";
+	type_water = Water::Type_water::UND;
+	width = 0;
+	height = 0;
+	maxDepth = 0;
+	countWaterAreas++;
+}
 
 Water::Water(const string &name, const Type_water& tpwater, const size_t& width, const size_t& height, const size_t& maxDepth)
 {
@@ -97,15 +151,12 @@ Water::Water(const string &name, const Type_water& tpwater, const size_t& width,
 	setWidth(width);
 	setHeight(height);
 	setMaxDepth(maxDepth);
+	countWaterAreas++;
 }
 
 Water::~Water()
 {
-	if (!name.empty())
-	{
-		cout << "Dctor for name" << endl;
-		name = nullptr;
-	}
+	countWaterAreas--;
 }
 
 
