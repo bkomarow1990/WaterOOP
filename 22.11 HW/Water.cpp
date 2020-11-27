@@ -2,7 +2,18 @@
 #include "Water.h"
 #include <string>
 size_t Water::countWaterAreas = 0;
-
+bool isDigit(const size_t& SIZE_, const string& string_) {
+	for (size_t i = 0; i < SIZE_; i++)
+	{
+		if (!isdigit(string_[i]))
+		{
+		}
+		else {
+			return true;
+		}
+	}
+	return false;
+}
 const string Water::getName() const
 {
 	return name;
@@ -42,7 +53,16 @@ size_t Water::getCountWaterAreas()
 
 void Water::setName(const string& name)
 {
-	this->name = name;
+	if (!name.empty())
+	{
+		if (isDigit(name.length(),name))
+		{
+			this->name = name;
+		}
+	}
+	else {
+		cout << "Enter correct name" << endl;
+	}
 }
 
 void Water::setWidth(const size_t& width)
