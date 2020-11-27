@@ -55,7 +55,7 @@ void Water::setName(const string& name)
 {
 	if (!name.empty())
 	{
-		if (isDigit(name.length(),name))
+		if (!isDigit(name.length(),name))
 		{
 			this->name = name;
 		}
